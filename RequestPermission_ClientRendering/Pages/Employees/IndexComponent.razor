@@ -1,0 +1,69 @@
+﻿@page "/employees"
+@inherits RazorBaseComponent
+
+<div style="display:flex;justify-content:flex-end">
+
+    <button class="btn btn-danger" @onclick="()=>InsertEmployee(PageStatus.Insert)">
+        <i class="fa-solid fa-plus"></i>
+        Insert Employee
+    </button>
+</div>
+
+<div>
+    
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Full Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Email</th>
+                <th scope="col">Position</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (employees is not null && employees.Any())
+            {
+                foreach (var employee in employees)
+                {
+                    <tr>
+                        <td>@employee.FullName</td>
+                        <td>@employee.Department</td>
+                        <td>@employee.Email</td>
+                        <td>@employee.Title</td>
+                        <td>
+                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect" @onclick="()=>openModal(employee.Id,PageStatus.Modify)"></i>
+                        </td>
+                        <td>
+                            <i style="cursor:pointer" class="fa-solid fa-trash icon-effect" @onclick="()=>DeleteEmployee(employee.Id)"></i>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <span>Loading...</span>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+
+
+<CustomModalComponent Id="employeeModifyModal">
+    <Body>
+        <ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus" OnClose="LoadEmployees">
+
+        </ModiyComponent>
+    </Body>
+</CustomModalComponent>
+
+
+
+
+

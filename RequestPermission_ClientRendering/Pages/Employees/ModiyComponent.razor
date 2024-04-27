@@ -1,0 +1,64 @@
+﻿@inherits RazorBaseComponent
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="row">
+            <div class="col-2 text-align">Isim </div>
+            <div class="col-10">
+                <input type="text" class="form-control" @bind="EmployeeModifyVM.Name">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-3">
+    <div class="col-10">
+        <div class="row">
+            <div class="col-2 text-align">Soyisim </div>
+            <div class="col-10">
+                <input type="text" class="form-control" @bind="EmployeeModifyVM.Surname">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row justify-content-center mt-3">
+    <div class="col-10">
+        <div class="row">
+            <div class="col-2 text-align">Email </div>
+            <div class="col-10">
+                <input type="text" class="form-control" @bind="EmployeeModifyVM.Email">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-3">
+    <div class="col-10">
+        <div class="row">
+            <div class="col-2 text-align">Position </div>
+            <div class="col-10">
+                <input type="text" class="form-control"  @bind="EmployeeModifyVM.Position">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-5 justify-content-end">
+    <div class="col-2">
+        <button class="btn btn-primary button-custom" @onclick="SaveModal">Save</button>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-danger button-custom" @onclick="CloseModal" >Close</button>
+    </div>
+  
+</div>
+
+            <style>
+                .text-align {
+                    text-align:center;
+                    margin:auto;
+                }
+                .button-custom {
+                    width:100%
+                }
+            </style>

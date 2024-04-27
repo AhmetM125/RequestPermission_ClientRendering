@@ -1,0 +1,31 @@
+﻿@* This Is My Custom Modal *@
+@inherits RazorBaseComponent
+<div id="@Id" class="modal fade bd-example-modal-m" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:35%">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title p-2">
+                        @Title
+                    </h5>
+                    <button @onclick="CloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        @Body
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .btn-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2rem;
+        width: 2rem;
+    }
+</style>
+
