@@ -23,7 +23,8 @@ builder.Services.AddBlazoredLocalStorage(/*config=>config.JsonSerializerOptions*
 
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("https://localhost:7044/api/")
+    BaseAddress = new Uri("https://localhost:7044/api/"),
+    Timeout = TimeSpan.FromMinutes(30)
 });
 
 await builder.Build().RunAsync();

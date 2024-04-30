@@ -17,8 +17,8 @@ public class JwtGenerator
     {
 
         var claims = new[] {
-             new Claim(ClaimTypes.Name, employeeLogin.Username),
-             new Claim(ClaimTypes.NameIdentifier,Guid.NewGuid().ToString())
+             new Claim("Username", employeeLogin.Username),
+             new Claim("EmployeeId",Guid.NewGuid().ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

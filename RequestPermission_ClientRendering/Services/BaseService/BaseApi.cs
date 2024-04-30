@@ -7,7 +7,7 @@ namespace RequestPermission_ClientRendering.Services.BaseService;
 public class BaseApi
 {
     protected string ApiName { get; set; }
-    protected HttpClient HttpClient { get; init; }
+    protected HttpClient HttpClient;
     public BaseApi(HttpClient httpClient)
     {
         HttpClient = httpClient;
