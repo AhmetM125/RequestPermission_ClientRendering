@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RequestPermission.Api.Infrastracture;
 
@@ -11,9 +12,11 @@ using RequestPermission.Api.Infrastracture;
 namespace RequestPermission.Api.Migrations
 {
     [DbContext(typeof(RequestPermissionContext))]
-    partial class RequestPermissionContextModelSnapshot : ModelSnapshot
+    [Migration("20240501054137_updt")]
+    partial class updt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

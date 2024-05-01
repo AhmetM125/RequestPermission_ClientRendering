@@ -15,7 +15,7 @@ public class DepartmentService : BaseApi, IDepartmentService
      => await HandlePostResponse(department, "AddDepartment");
 
     public async Task DeleteDepartmentAsync(int id)
-     => await HandleDeleteResponseByIntId(id, $"{id}");
+     => await HandleDeleteResponseByIntId(id, $"DeleteDepartment/{id}");
 
     public async Task<List<DepartmentGridVM>?> GetActiveDepartmentsAsync()
      => await HandleReadResponse<DepartmentGridVM>("GetActiveDepartments");

@@ -68,13 +68,13 @@ public class DepartmentController : ControllerBase
         return Ok(new { success = true });
     }
 
-    [HttpDelete("DeleteDepartment/{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [HttpDelete("DeleteDepartment/{departmentId}")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(statusCode: StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult DeleteDepartment(int id)
+    public IActionResult DeleteDepartment(string departmentId)
     {
-        _departmentService.DeleteDepartment(id);
+        _departmentService.DeleteDepartment(Convert.ToInt32(departmentId));
         return Ok(new { success = true });
     }
 }

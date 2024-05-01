@@ -111,10 +111,10 @@ namespace RequestPermission.Api.DataLayer.Generic
 
         public void Save()
         {
+            EntityTracker();
             _requestPermissionContext.SaveChanges();
         }
-
-        public async Task SaveAsync(CancellationToken cancellationToken = default)
+        public void EntityTracker()
         {
             var currentTime = DateTime.UtcNow;
             var currentUserId = Guid.Empty; // i need session user id here (later)
@@ -134,6 +134,11 @@ namespace RequestPermission.Api.DataLayer.Generic
                     entity.Property("UpdateUser").CurrentValue = currentUser;
                 }
             }
+        }
+
+        public async Task SaveAsync(CancellationToken cancellationToken = default)
+        {
+            EntityTracker();   
             await _requestPermissionContext.SaveChangesAsync();
         }
 

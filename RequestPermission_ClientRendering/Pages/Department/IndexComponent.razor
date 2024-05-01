@@ -8,46 +8,53 @@
     <div class="col-10"></div>
     <div class="col-2 ">
         <div class="row justify-content-center">
-            <button style="width:80%" class="btn btn-outline-danger" @onclick="()=>InsertDepartment(PageStatus.Insert)">Insert Department</button>
+            <button style="width:80%" class="btn btn-outline-danger" @onclick="()=>Modify(PageStatus.Insert)">Insert Department</button>
         </div>
     </div>
 </div>
 <div class="row">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Department Id</th>
-                <th>Department Name</th>
-                <th>Is Active</th>
-                <th>Total Employee</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody class="table table-striped">
-            @if (DepartmentGridVMs is not null && DepartmentGridVMs.Any())
-            {
-                foreach (var item in DepartmentGridVMs)
+    @if (DepartmentGridVMs is null)
+    {
+        <LoaderComponent />
+    }
+    else if (DepartmentGridVMs is not null && DepartmentGridVMs.Any())
+    {
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Department Id</th>
+                    <th>Department Name</th>
+                    <th>Is Active</th>
+                    <th>Total Employee</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table table-striped">
+                @foreach (var item in DepartmentGridVMs)
                 {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.Name</td>
-                        <td>
-                            @((MarkupString)(item.IsActive ? "<span class='badge badge-pill badge-success'>Active</span>" : "<span class='badge badge-pill badge-danger'>Pasive</span>"))
-                        </td>
-                        <td>@item.TotalEmployee</td>
-                        <td>
-                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect"></i>
-                        </td>
-                        <td>
-                            <i style="cursor:pointer" class="fa-solid fa-trash icon-effect"></i>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        @((MarkupString)(item.IsActive ? "<span class='badge badge-pill badge-success'>Active</span>" : "<span class='badge badge-pill badge-danger'>Pasive</span>"))
+                    </td>
+                    <td>@item.TotalEmployee</td>
+                    <td>
+                        <i style="cursor:pointer" class="fa-solid fa-gear icon-effect" @onclick="()=>Modify(PageStatus.Modify,item)"></i>
+                    </td>
+                    <td>
+                            <i style="cursor:pointer" class="fa-solid fa-trash icon-effect" @onclick="()=>Modify(PageStatus.Delete,item)"></i>
+                    </td>
+                </tr>
 
                 }
-            }
-        </tbody>
-    </table>
+
+            </tbody>
+        </table>
+    }
 </div>
 
 <CustomModalComponent Id="ModifyDepartment" Title="Department">

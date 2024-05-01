@@ -22,6 +22,7 @@ public class DepartmentService : IDepartmentService
     public void DeleteDepartment(int departmentId)
     {
         _efDepartmentDal.DeleteById(departmentId);
+        _efDepartmentDal.Save();
     }
 
     public async Task<DepartmentModifyDto> GetDepartmentForModify(int departmentId)
