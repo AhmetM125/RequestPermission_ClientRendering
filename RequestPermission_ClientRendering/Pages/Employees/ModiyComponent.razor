@@ -1,4 +1,18 @@
 ﻿@inherits RazorBaseComponent
+
+
+@if (ValidationResult != null && ValidationResult.Any())
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ValidationResult)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
 <div class="row justify-content-center">
     <div class="col-10">
         <div class="row">
@@ -38,7 +52,7 @@
         <div class="row">
             <div class="col-2 text-align">Position </div>
             <div class="col-10">
-                <input type="text" class="form-control"  @bind="EmployeeModifyVM.Position">
+                <input type="text" class="form-control" @bind="EmployeeModifyVM.Position">
             </div>
         </div>
     </div>
@@ -48,17 +62,18 @@
         <button class="btn btn-primary button-custom" @onclick="SaveModal">Save</button>
     </div>
     <div class="col-2">
-        <button class="btn btn-danger button-custom" @onclick="CloseModal" >Close</button>
+        <button class="btn btn-danger button-custom" @onclick="CloseModal">Close</button>
     </div>
-  
+
 </div>
 
-            <style>
-                .text-align {
-                    text-align:center;
-                    margin:auto;
-                }
-                .button-custom {
-                    width:100%
-                }
-            </style>
+<style>
+    .text-align {
+        text-align: center;
+        margin: auto;
+    }
+
+    .button-custom {
+        width: 100%
+    }
+</style>

@@ -10,23 +10,27 @@
 </div>
 
 <div>
-    
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Full Name</th>
-                <th scope="col">Department</th>
-                <th scope="col">Email</th>
-                <th scope="col">Position</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+    @if (employees is null)
+    {
+        <LoaderComponent />
+    }
+    else if (employees is not null && employees.Any())
+    {
 
-            @if (employees is not null && employees.Any())
-            {
-                foreach (var employee in employees)
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Position</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in employees)
                 {
                     <tr>
                         <td>@employee.FullName</td>
@@ -42,15 +46,10 @@
 
                     </tr>
                 }
-            }
-            else
-            {
-                <span>Loading...</span>
-            }
 
-
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    }
 </div>
 
 

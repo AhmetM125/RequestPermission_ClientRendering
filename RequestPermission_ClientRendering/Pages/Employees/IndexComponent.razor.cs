@@ -13,15 +13,12 @@ public partial class IndexComponent : RazorBaseComponent
     private List<EmployeesGridVM> employees;
 
     EmployeeModifyVM employeeModifyVM = new EmployeeModifyVM();
-    PageStatus PageStatus { get; set; } = PageStatus.List;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         if (employees is null)
             await LoadEmployees();
-
-
     }
     async Task LoadEmployees()
     {
@@ -31,8 +28,7 @@ public partial class IndexComponent : RazorBaseComponent
     async Task openModal(Guid employeeId, PageStatus pageStatus)
     {
         PageStatus = pageStatus;
-        var result = employees.FirstOrDefault(x => x.Id == employeeId);
-        employeeModifyVM.Id = result.Id;
+        employeeModifyVM.Id = employees.FirstOrDefault(x => x.Id == employeeId).Id;
         await InvokeVoidJavascript();
     }
     async Task InsertEmployee(PageStatus pageStatus)
@@ -49,28 +45,4 @@ public partial class IndexComponent : RazorBaseComponent
         await _employeeService.DeleteSelectedEmployee(employeeId);
         await LoadEmployees();
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-//void ShowModal()
-//{
-//    ModalParameters mParams = new ModalParameters();
-//    mParams.Add("Title", "Edit Employee");
-//    mParams.Add("Description", "Edit Employee");
-//    mParams.Add("Body", "Employees\\ModiyComponent");
-//    ModalOptions modalOptions = new ModalOptions();
-//    modalOptions.Position = ModalPosition.TopCenter;
-//    ModalComponent modalComponent = new ModalComponent();
-
-//    Modal.Show<ModalComponent>("Edit Employee", mParams, modalOptions);
-//}

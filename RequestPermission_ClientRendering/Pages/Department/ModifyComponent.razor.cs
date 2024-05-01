@@ -17,9 +17,21 @@ public partial class ModifyComponent : RazorBaseComponent
     }
     async Task SaveDepartment()
     {
-        if (Department.Name != string.Empty)
-            await DepartmentService.AddDepartmentAsync(Department);
-        await OnClose.InvokeAsync();
-        await CloseModal(ComponentId);
+        try
+        {
+            if (Department.Name != string.Empty)
+                await DepartmentService.AddDepartmentAsync(Department);
+            MainLayoutCascadingValue.ShowMessage("Department Added", MessageType.Success);
+        }
+        catch (Exception ex)
+        {
+            MainLayoutCascadingValue.ShowMessage("An error occurred while adding the department", MessageType.Error);
+            Console.WriteLine(ex.InnerException);
+        }
+        finally
+        {
+            await OnClose.InvokeAsync();
+            await CloseModal(ComponentId);
+        }
     }
 }

@@ -26,6 +26,7 @@ public class SecurityController : ControllerBase
             return Unauthorized();
         }
         return Ok(result);
+        
     }
     //public IActionResult Register(EmployeeRegisterVM employee)
     //{

@@ -35,6 +35,7 @@ public partial class IndexComponent : RazorBaseComponent
                 break;
             case PageStatus.Delete:
                 await _departmentService.DeleteDepartmentAsync(departmentGridVM.Id);
+                MainLayoutCascadingValue.ShowMessage("Department Deleted", MessageType.Success);
                 break;
             default:
                 break;

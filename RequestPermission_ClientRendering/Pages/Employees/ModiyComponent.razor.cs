@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using RequestPermission_ClientRendering.Base;
 using RequestPermission_ClientRendering.Services.Employee.Abstract;
 using RequestPermission_ClientRendering.ViewModels.Employees;
@@ -11,6 +12,7 @@ public partial class ModiyComponent : RazorBaseComponent
     [Inject] IEmployeeService _employeeService { get; set; }
     [Parameter] public PageStatus PageMode { get; set; }
     [Parameter] public EventCallback OnClose { get; set; }
+    List<string> ValidationResult { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,6 +39,9 @@ public partial class ModiyComponent : RazorBaseComponent
                 await _employeeService.UpdateUser(EmployeeModifyVM);
                 break;
             case PageStatus.Insert:
+                var result = CheckValidations();
+                if (!result) return;
+
                 var employeeInsertDto = new EmployeeInsertVM()
                 {
                     Title = EmployeeModifyVM.Position,
@@ -56,5 +61,20 @@ public partial class ModiyComponent : RazorBaseComponent
 
         await OnClose.InvokeAsync();
         await CloseModal();
+    }
+    bool CheckValidations()
+    {
+        EditContext editContext = new EditContext(EmployeeModifyVM);
+        editContext.OnValidationRequested += (s, e) => editContext.Validate();
+        ValidationMessageStore messageStore = new ValidationMessageStore(editContext);
+        ValidationResult = new List<string>();
+        if (string.IsNullOrEmpty(EmployeeModifyVM.Name))
+            ValidationResult.Add("Name is required");
+        if (string.IsNullOrEmpty(EmployeeModifyVM.Surname))
+            ValidationResult.Add("Surname is required");
+        if (string.IsNullOrEmpty(EmployeeModifyVM.Email))
+            ValidationResult.Add("Email is required");
+
+        return ValidationResult.Any() ? false : true;
     }
 }

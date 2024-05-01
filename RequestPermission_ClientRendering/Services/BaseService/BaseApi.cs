@@ -14,44 +14,75 @@ public class BaseApi
     }
     protected async Task HandlePutResponse<T>(T entity, string requestUrl)
     {
-        //var response = await HttpClient.PutAsJsonAsync(ApiName + requestUrl, entity);
-        var content = JsonSerializer.Serialize(entity);
-        var result = new StringContent(content, Encoding.UTF8, "application/json");
-        //var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
-        var response = await HttpClient.PutAsync(ApiName + requestUrl, result);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            //var response = await HttpClient.PutAsJsonAsync(ApiName + requestUrl, entity);
+            var content = JsonSerializer.Serialize(entity);
+            var result = new StringContent(content, Encoding.UTF8, "application/json");
+            //var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
+            var response = await HttpClient.PutAsync(ApiName + requestUrl, result);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
         }
     }
     protected async Task HandlePutResponseJson<T>(T entity)
     {
-        var response = await HttpClient.PutAsJsonAsync(ApiName, entity);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            var response = await HttpClient.PutAsJsonAsync(ApiName, entity);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
     protected async Task HandlePostResponse<T>(T entity, string requestUrl)
     {
-        var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
-        HttpContent httpContent = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
-        var response = await HttpClient.PostAsync(ApiName + requestUrl, content);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
+            HttpContent httpContent = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
+            var response = await HttpClient.PostAsync(ApiName + requestUrl, content);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
     protected async Task HandlePostResponseAsJson<T>(T entity, string requestUrl)
     {
-        var response = await HttpClient.PostAsJsonAsync(ApiName + requestUrl, entity);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            var response = await HttpClient.PostAsJsonAsync(ApiName + requestUrl, entity);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
     protected async Task<TItem> HandleLoginPostResponse<TItem, T>(T entity, string requestUrl)
@@ -70,20 +101,36 @@ public class BaseApi
     }
     protected async Task HandleDeleteResponse(Guid id, string requestUrl)
     {
-        var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
     protected async Task HandleDeleteResponseByIntId(int id, string requestUrl)
     {
-        var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
     protected async Task<List<T>?> HandleReadResponse<T>(string requestUrl)
@@ -110,16 +157,24 @@ public class BaseApi
     }
     protected async Task<T?> HandleSingleReadResponse<T>(string requestUrl)
     {
-        var response = await HttpClient.GetAsync(ApiName + requestUrl);
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var content = await response.Content.ReadFromJsonAsync<T>();
-            return content ?? default;
+            var response = await HttpClient.GetAsync(ApiName + requestUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadFromJsonAsync<T>();
+                return content ?? default;
+            }
+            else
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
         }
-        else
+        catch (Exception)
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+
+            throw;
         }
     }
     //protected async Task HandleDeleteResponse(Guid id,string requestUrl)

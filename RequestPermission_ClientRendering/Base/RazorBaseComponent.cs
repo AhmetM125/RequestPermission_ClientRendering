@@ -7,7 +7,8 @@ namespace RequestPermission_ClientRendering.Base
     {
         [Inject] protected IJSRuntime JSRuntime { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
-        protected PageStatus PageStatus { get; set; }
+        [CascadingParameter] protected MainLayoutCascadingValue MainLayoutCascadingValue { get; set; }
+        protected PageStatus PageStatus { get; set; } = PageStatus.List;
         protected async Task ShowModal(string modalId) => await JSRuntime.InvokeVoidAsync("OpenModal", modalId);
         protected async Task CloseModal(string modalId) => await JSRuntime.InvokeVoidAsync("CloseModal", modalId);
 
