@@ -1,1 +1,41 @@
 ﻿@inherits RazorBaseComponent
+
+
+
+<div class="container">
+    <div class="col-12">
+        <div class="row justify-content-between">
+            <div class="col-6">
+                <p>Departman Name</p>
+            </div>
+            <div class="col-6">
+                <input @bind="Department.Name" type="text" class="form-control" />
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div style="display:flex;margin-top:15px">
+                        <div style="margin-right:40px">
+                            <input type="checkbox" class="form-check" style="accent-color: red;width:30px;height:15px" @bind="Department.IsActive" Label="Is Active" />
+                        </div>
+                        <span>
+                            Active/Pasive
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end" class="mt-5">
+            <div style="width:40%">
+                <button class="btn btn-outline-danger w-100" @onclick="SaveDepartment">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

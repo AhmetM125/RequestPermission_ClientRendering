@@ -50,7 +50,7 @@ public class EmployeeService : IEmployeeService
             E_DEPARTMENT = employee.Department,
             E_ID = Guid.NewGuid(),
             E_NAME = employee.Name,
-            E_SURNAME = "",
+            E_SURNAME = employee.Surname,
             E_TITLE = employee.Title,
         });
         await _efEmployeeDal.SaveAsync(CancellationToken.None);

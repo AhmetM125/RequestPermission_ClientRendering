@@ -12,8 +12,8 @@ using RequestPermission.Api.Infrastracture;
 namespace RequestPermission.Api.Migrations
 {
     [DbContext(typeof(RequestPermissionContext))]
-    [Migration("20240417115208_nullable-datetime")]
-    partial class nullabledatetime
+    [Migration("20240501033952_RebuildDatabase")]
+    partial class RebuildDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,12 @@ namespace RequestPermission.Api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("D_ID"));
+
+                    b.Property<bool>("D_IS_ACTIVE")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("D_MANAGER_ID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("D_NAME")
                         .IsRequired()
@@ -61,7 +67,7 @@ namespace RequestPermission.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("E_DEPARTMENT")
+                    b.Property<int?>("E_DEPARTMENT")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("E_EMP_COMM_ID")
@@ -174,7 +180,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasKey("P_ID");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Role", b =>
@@ -190,7 +196,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasKey("R_ID");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.RolePermission", b =>
@@ -208,7 +214,27 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("RP_PERMISSION_ID");
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermissions");
+                });
+
+            modelBuilder.Entity("RequestPermission.Api.Entity.Security", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Securities");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.UserRole", b =>
@@ -236,7 +262,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("UR_ROLE_ID");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Vacation", b =>
@@ -288,8 +314,7 @@ namespace RequestPermission.Api.Migrations
                     b.HasOne("RequestPermission.Api.Entity.Department", "DEPARTMENT")
                         .WithMany("EMPLOYEES")
                         .HasForeignKey("E_DEPARTMENT")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("RequestPermission.Api.Entity.EmployeeCommunication", "EMPLOYEE_COMMUNICATION")
                         .WithOne()
@@ -331,6 +356,17 @@ namespace RequestPermission.Api.Migrations
                     b.Navigation("ROLE");
                 });
 
+            modelBuilder.Entity("RequestPermission.Api.Entity.Security", b =>
+                {
+                    b.HasOne("RequestPermission.Api.Entity.Employee", "Employee")
+                        .WithOne("Security")
+                        .HasForeignKey("RequestPermission.Api.Entity.Security", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("RequestPermission.Api.Entity.UserRole", b =>
                 {
                     b.HasOne("RequestPermission.Api.Entity.Employee", "EMPLOYEE")
@@ -368,6 +404,9 @@ namespace RequestPermission.Api.Migrations
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Employee", b =>
                 {
+                    b.Navigation("Security")
+                        .IsRequired();
+
                     b.Navigation("USER_ROLES");
 
                     b.Navigation("VACATIONS");

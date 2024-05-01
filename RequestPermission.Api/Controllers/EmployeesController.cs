@@ -46,7 +46,6 @@ public class EmployeesController : ControllerBase
     {
         try
         {
-            await _employeeService.GetEmployees();
             return Ok(await _employeeService.GetEmployees());
         }
         catch (Exception)

@@ -33,6 +33,9 @@ namespace RequestPermission.Api.Migrations
                     b.Property<bool>("D_IS_ACTIVE")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("D_MANAGER_ID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("D_NAME")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -61,7 +64,7 @@ namespace RequestPermission.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("E_DEPARTMENT")
+                    b.Property<int?>("E_DEPARTMENT")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("E_EMP_COMM_ID")
@@ -308,8 +311,7 @@ namespace RequestPermission.Api.Migrations
                     b.HasOne("RequestPermission.Api.Entity.Department", "DEPARTMENT")
                         .WithMany("EMPLOYEES")
                         .HasForeignKey("E_DEPARTMENT")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("RequestPermission.Api.Entity.EmployeeCommunication", "EMPLOYEE_COMMUNICATION")
                         .WithOne()

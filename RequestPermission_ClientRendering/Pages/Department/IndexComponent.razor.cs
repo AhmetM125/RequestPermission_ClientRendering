@@ -16,4 +16,9 @@ public partial class IndexComponent : RazorBaseComponent
     private async Task LoadData()
      => DepartmentGridVMs = await _departmentService.GetDepartmentsAsync();
 
+    async Task InsertDepartment(PageStatus pageStatus)
+    {
+        PageStatus = pageStatus;
+        await ShowModal("ModifyDepartment");
+    }
 }

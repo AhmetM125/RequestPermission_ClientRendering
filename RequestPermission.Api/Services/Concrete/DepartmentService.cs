@@ -63,7 +63,8 @@ public class DepartmentService : IDepartmentService
 
     public async Task InsertNewDepartment(DepartmentInsertDto department)
     {
-        await _efDepartmentDal.AddAsync(_mapper.Map<Department>(department));
+        await _efDepartmentDal.AddAsync(new Department() { D_IS_ACTIVE = department.IsActive, D_NAME = department.Name });
+        await _efDepartmentDal.SaveAsync(CancellationToken.None);
     }
 
     public void UpdateDepartment(DepartmentModifyDto department)

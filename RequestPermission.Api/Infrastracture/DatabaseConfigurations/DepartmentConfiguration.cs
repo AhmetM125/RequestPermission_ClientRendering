@@ -9,6 +9,7 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {
         builder.HasKey(x => x.D_ID);
         builder.Property(x => x.D_NAME).IsRequired().HasMaxLength(50);
+        builder.Property(x=>x.D_MANAGER_ID).IsRequired(false);
         builder.Property(x => x.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
         builder.Property(x => x.InsertDate).IsRequired(false).HasColumnType("datetime");
         builder.Property(x => x.UpdateDate).IsRequired(false).HasColumnType("datetime");
@@ -19,7 +20,7 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
         .HasForeignKey(e => e.E_DEPARTMENT)
          .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne(x=>x.DepartmentDto).WithOne().HasForeignKey<Department>(x=>x.D_PARENT_ID).OnDelete(DeleteBehavior.NoAction);
+        //builder.HasOne(x=>x.DepartmentDto).WithOne().HasForeignKey<Department>(x=>x.D_PARENT_ID).OnDelete(DeleteBehavior.NoAction);
         //builder.HasOne(x=>x.Manager).WithOne(x=>x.DEPARTMENT).HasForeignKey<Department>(x=>x.D_MANAGER_ID).OnDelete(DeleteBehavior.NoAction); 
 
     }
