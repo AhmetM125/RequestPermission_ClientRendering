@@ -7,9 +7,15 @@ namespace RequestPermission_ClientRendering.Pages
 {
     public partial class LoginComponent : RazorBaseComponent
     {
+        [Inject] private ILoginService _loginService { get; set; }
+
         EmployeeLoginVM employeeLoginVM = new EmployeeLoginVM();
         LoginResponse LoginResponse = new LoginResponse();
-        [Inject] ILoginService _loginService { get; set; }
+        EmployeeRegisterVM employeeRegisterVM = new EmployeeRegisterVM();
+        bool isLoginPage = true;
+        DateTime selectedDate = DateTime.Now;
+        List<string> errors = new List<string>();
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -26,10 +32,27 @@ namespace RequestPermission_ClientRendering.Pages
                     NavigationManager.NavigateTo("/", true);
                 }
             }
+        }
+        async Task Register()
+        {
+            DeleteErrors();
+            if (string.IsNullOrEmpty(employeeRegisterVM.Username) ||
+                string.IsNullOrEmpty(employeeRegisterVM.Password) ||
+                string.IsNullOrEmpty(employeeRegisterVM.ConfirmPassword))
+                errors.Add("Please fill all fields");
 
+            if (employeeRegisterVM.Password != employeeRegisterVM.ConfirmPassword)
+                errors.Add("Password and Confirm Password must be the same");
 
+            if (!errors.Any())
+            {
+                var response = await _loginService.Register(employeeRegisterVM);
+                if (response != null && !string.IsNullOrEmpty(response.JwtToken) && response.Id != Guid.Empty)
+                    NavigationManager.NavigateTo("/");
+            }
         }
 
-
+        void DeleteErrors()
+            => errors = new List<string>();
     }
 }

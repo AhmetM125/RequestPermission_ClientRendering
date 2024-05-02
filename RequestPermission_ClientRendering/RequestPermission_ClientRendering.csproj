@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Utils\Request-HttpClient\" />
     <Folder Include="Utils\Response-HttpClient\" />
-    <Folder Include="ViewModels\Security\" />
   </ItemGroup>
 
 </Project>

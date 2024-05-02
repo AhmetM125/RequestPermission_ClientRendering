@@ -2,35 +2,140 @@
 
 
 
-<div class="row justify-content-center align-items-center " style="height:50vh">
+@if (!isLoginPage)
+{
+    <div class="row justify-content-center align-items-center" style="height:50vh">
 
-    <div class="col-4 mt-5 custom-shadow">
-        <div class="row mt-5 justify-content-center">
-            <img src="https://neareasttechnology.com/photo/logo/2021/1618381558_logo-org.png" style="width:150px;" />
+        <div class="col-4 mt-5 custom-shadow">
+            <div class="row mt-5 justify-content-center">
+                <img src="https://neareasttechnology.com/photo/logo/2021/1618381558_logo-org.png" style="width:150px;" />
+            </div>
+            <div class="row mt-3 text-center">
+                <h4 class="custom-header">Login</h4>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <div class="col-8">
+                    <label class="ms-2">Username</label>
+                    <input type="text" class="form-control" @bind="employeeLoginVM.Username" placeholder="Please Enter Your Username">
+                </div>
+            </div>
+            <div class="row mt-2 justify-content-center">
+                <div class="col-8">
+                    <label class="ms-2">Password</label>
+                    <input type="password" class="form-control" @bind="employeeLoginVM.Password" placeholder="Please Enter Your Password">
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3 ">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-8 text-end">
+                            <a href="https://www.google.com" class="text-decoration-none btn btn-sm btn-outline-primary">Forgot Password?</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center text-center mt-5 ">
+                <div class="col-10">
+                    <button class="btn btn-outline-danger w-75 custom-login-button" @onclick="Login">
+                        <i class="fas fa-sign-in"></i>
+                        Login
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center text-center mt-2 mb-3">
+                <div class="col-10">
+                    <button class="btn btn-outline-primary w-75 custom-login-button" @onclick="@(()=>NavigationManager.NavigateTo("/register"))">
+                        <i class="fa-regular fa-registered"></i>
+                        Register
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="row mt-3 text-center">
-            <h4 class="custom-header">Login</h4>
-        </div>
-        <div class="row mt-4 justify-content-center">
+
+    </div>
+}
+else
+{
+    <div style="width:100%;height:100vh">
+        <div style="display:flex;justify-content:center;align-content:center;height:100%;align-items:center">
+
+            <div class="col-4 mt-5 custom-shadow">
+                <div class="row mt-5 justify-content-center">
+                    <img src="https://neareasttechnology.com/photo/logo/2021/1618381558_logo-org.png" style="width:150px;" />
+                </div>
+                <div class="row mt-5 justify-content-center">
+                    <div class="col-8">
+                        @if (errors != null && errors.Any())
+                        {
+
+                            <div class="alert alert-danger" role="alert">
+                                <div style="display:flex;justify-content:flex-end">
+                                    <button @onclick="DeleteErrors" type="button" class="btn btn-sm btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                @foreach (var error in errors)
+                                {
+                                    <p>@error</p>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div class="row mt-3 text-center">
+                    <h4 class="custom-header">Register</h4>
+                </div>
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-8">
+                        <label class="ms-2">Username</label>
+                        <input type="text" class="form-control" @bind="employeeRegisterVM.Username" placeholder="Please Enter Your Username">
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-8">
+                        <label class="ms-2">Password</label>
+                        <input type="password" class="form-control" @bind="employeeRegisterVM.Password" placeholder="Please Enter Your Password">
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-8">
+                        <label class="ms-2">Confirm Password</label>
+                        <input type="password" class="form-control" @bind="employeeRegisterVM.ConfirmPassword" placeholder="Please Confirm Password">
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-8">
+                        <label class="ms-2">Birth Date</label>
+                        <input type="date" class="form-control" @bind="@selectedDate" />
+                    </div>
+                </div>
+                @* <div class="row justify-content-center mt-3 ">
             <div class="col-8">
-                <label class="ms-2">Username</label>
-                <input type="text" class="form-control" @bind="employeeLoginVM.Username" placeholder="Please Enter Your Username">
+            <div class="row">
+            <div class="col-4"></div>
+            <div class="col-8 text-end">
+            <a href="https://www.google.com" class="text-decoration-none btn btn-sm btn-outline-primary">Forgot Password?</a>
             </div>
-        </div>
-        <div class="row mt-2 justify-content-center">
-            <div class="col-8">
-                <label class="ms-2">Password</label>
-                <input type="password" class="form-control" @bind="employeeLoginVM.Password" placeholder="Please Enter Your Password">
             </div>
-        </div>
-        <div class="row justify-content-center text-center mt-5 mb-3">
-            <div class="col-10">
-                <button class="btn btn-outline-danger w-75 custom-login-button" @onclick="Login">Login</button>
             </div>
+            </div> *@
+
+                <div class="row justify-content-center text-center mt-5 mb-5">
+                    <div class="col-10">
+                        <button class="btn btn-outline-success w-75 custom-login-button" @onclick="Register">
+                            <i class="fas fa-sign-in"></i>
+                            Register
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
-
-</div>
+}
 
 <style>
     .custom-shadow {
@@ -44,5 +149,6 @@
     .custom-login-button {
         border-radius: 10px;
     }
+
 </style>
 @* <div style="display:flex;justify-content:center;height:400px;align-items:center;">testt</div> *@

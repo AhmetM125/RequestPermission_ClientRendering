@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RequestPermission.Api.Infrastracture;
 using System.Linq.Expressions;
 
@@ -125,17 +126,24 @@ namespace RequestPermission.Api.DataLayer.Generic
             {
                 if (entity.State == EntityState.Added)
                 {
-                    entity.Property("InsertDate").CurrentValue = currentTime;
-                    entity.Property("InsertUser").CurrentValue = currentUser;
+                    SetAuditProperties(entity, "InsertDate", currentTime);
+                    SetAuditProperties(entity, "InsertUser", currentUser);
                 }
                 else if (entity.State == EntityState.Modified)
                 {
-                    entity.Property("UpdateDate").CurrentValue = currentTime;
-                    entity.Property("UpdateUser").CurrentValue = currentUser;
+                    SetAuditProperties(entity, "UpdateDate", currentTime);
+                    SetAuditProperties(entity, "UpdateUser", currentUser);
                 }
             }
         }
-
+        void SetAuditProperties(EntityEntry entity, string propertyName, object value)
+        {
+            var property = entity.Entity.GetType().GetProperty(propertyName);
+            if (property != null && property.CanWrite)
+            {
+                entity.Property(propertyName).CurrentValue = value;
+            }
+        }
         public async Task SaveAsync(CancellationToken cancellationToken = default)
         {
             EntityTracker();   

@@ -1,5 +1,7 @@
 ﻿using RequestPermission.Api.DataLayer.Contract;
+using RequestPermission.Api.Dtos.Employee;
 using RequestPermission.Api.Dtos.Security;
+using RequestPermission.Api.Entity;
 using RequestPermission.Api.Services.Contracts;
 using RequestPermission.Api.Utils;
 
@@ -37,15 +39,18 @@ public class SecurityService : ISecurityService
 
     public async Task Register(EmployeeRegisterVM employeeRegisterVM)
     {
-
-        //     public string Username { get; init; }
-        //public string Password { get; init; }
-        //public string Email { get; init; }
-        //public string FirstName { get; init; }
-        //public string LastName { get; init; }
-
-        //var employee = Employee.CreateEmployeeForRegister(employeeRegisterVM.LastName, employeeRegisterVM.FirstName,
-        //                                                        employeeRegisterVM.Email);
-        //_efSecurityDal.Add(employee);
+        var employee = new Security
+        {
+            Username = employeeRegisterVM.Username,
+            Password = PasswordEncryption.Encrypt(employeeRegisterVM.Password),
+            Employee = new Employee()
+            {
+                E_NAME = employeeRegisterVM.FirstName,
+                E_SURNAME = employeeRegisterVM.LastName
+            },
+            Id = Guid.NewGuid()
+        };
+        await _efSecurityDal.AddAsync(employee);
+        await _efSecurityDal.SaveAsync(CancellationToken.None);
     }
 }

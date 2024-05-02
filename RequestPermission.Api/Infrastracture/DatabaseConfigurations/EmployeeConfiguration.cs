@@ -12,7 +12,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(x => x.E_NAME).IsRequired().HasMaxLength(50);
         builder.Property(x => x.E_SURNAME).IsRequired().HasMaxLength(50);
         builder.Property(x => x.E_DEPARTMENT).IsRequired(false);
-        builder.Property(x => x.E_TITLE).HasColumnType("nvarchar(50)").HasMaxLength(50);
+        builder.Property(x => x.E_TITLE).IsRequired(false).HasColumnType("nvarchar(50)").HasMaxLength(50);
         builder.Property(x => x.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
         builder.Property(x => x.InsertDate).IsRequired(false).HasColumnType("datetime");
         builder.Property(x => x.UpdateDate).IsRequired(false).HasColumnType("datetime");

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RequestPermission.Api.Dtos.Security;
 using RequestPermission.Api.Services.Contracts;
 using System.Net;
@@ -16,6 +17,7 @@ public class SecurityController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(LoginResponseVM), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login(EmployeeLoginVM employee)
@@ -26,11 +28,19 @@ public class SecurityController : ControllerBase
             return Unauthorized();
         }
         return Ok(result);
-        
+
     }
-    //public IActionResult Register(EmployeeRegisterVM employee)
-    //{
-    //    _securityService.Register(employee);
-    //    return Ok(new { success = true });
-    //}
+    [HttpPost("Register")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(EmployeeRegisterVM), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Register(EmployeeRegisterVM employee)
+    {
+        await _securityService.Register(employee);
+        var result = await _securityService.Login(new EmployeeLoginVM { Username = employee.Username, Password = employee.Password });
+        if(result != null)
+            return Ok(result);
+        else
+            return Ok(new { success = false });
+    }
 }
