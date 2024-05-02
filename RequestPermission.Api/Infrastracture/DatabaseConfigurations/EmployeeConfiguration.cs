@@ -21,6 +21,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         builder.HasOne(x => x.EMPLOYEE_COMMUNICATION)
             .WithOne().HasForeignKey<Employee>(x => x.E_EMP_COMM_ID).OnDelete(DeleteBehavior.NoAction);
-       
+
+
     }
 }

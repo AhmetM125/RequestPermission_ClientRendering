@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RequestPermission.Api.Infrastracture;
 
@@ -11,9 +12,11 @@ using RequestPermission.Api.Infrastracture;
 namespace RequestPermission.Api.Migrations
 {
     [DbContext(typeof(RequestPermissionContext))]
-    partial class RequestPermissionContextModelSnapshot : ModelSnapshot
+    [Migration("20240502124012_departmentmanager")]
+    partial class departmentmanager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +60,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("D_MANAGER_ID");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Employee", b =>
@@ -106,7 +109,7 @@ namespace RequestPermission.Api.Migrations
                         .IsUnique()
                         .HasFilter("[E_EMP_COMM_ID] IS NOT NULL");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.EmployeeCommunication", b =>
@@ -158,7 +161,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("EMPLOYEEE_ID");
 
-                    b.ToTable("EmployeeCommunication", (string)null);
+                    b.ToTable("EmployeeCommunication");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Permission", b =>
@@ -178,7 +181,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasKey("P_ID");
 
-                    b.ToTable("Permissions", (string)null);
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Role", b =>
@@ -194,7 +197,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasKey("R_ID");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.RolePermission", b =>
@@ -212,7 +215,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("RP_PERMISSION_ID");
 
-                    b.ToTable("RolePermissions", (string)null);
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Security", b =>
@@ -232,7 +235,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Securities", (string)null);
+                    b.ToTable("Securities");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.UserRole", b =>
@@ -260,7 +263,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("UR_ROLE_ID");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Vacation", b =>
@@ -304,7 +307,7 @@ namespace RequestPermission.Api.Migrations
 
                     b.HasIndex("V_EMP_ID");
 
-                    b.ToTable("Vacations", (string)null);
+                    b.ToTable("Vacations");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Department", b =>
