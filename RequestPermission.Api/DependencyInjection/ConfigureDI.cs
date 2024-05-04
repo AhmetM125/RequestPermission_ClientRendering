@@ -16,5 +16,7 @@ public static class ConfigureDI
         services.AddScoped<IEfDepartmentDal, EfDepartmentDal>();
         services.AddScoped<ISecurityService, SecurityService>();
         services.AddScoped<IEfSecurityDal, EfSecurityDal>();
+        services.AddScoped<IRequestPermissionService, RequestPermissionService>();
+        services.AddScoped<IEfRequestPermissionDal, EfRequestPermissionDal>();
     }
 }

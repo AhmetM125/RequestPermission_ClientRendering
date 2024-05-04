@@ -1,2 +1,101 @@
 ﻿@inherits RazorBaseComponent
+@page "/requestpermission"
 
+<h3>Request Permission</h3>
+
+<div class="row">
+    <div class="col-6 mt-5 border border-1 shadow ">
+        <h5 class="mb-3">Request Page</h5>
+        <div class="row mb-3">
+            <div class="col-5">
+                <input type="date" @bind="requestVM.StartDate" class="form-control" />
+            </div>
+            <div class="col-7 text-center justify-content-center ">
+                <p>
+                    Start Date
+                </p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-5">
+                <input type="date" @bind="requestVM.EndDate" class="form-control" />
+            </div>
+            <div class="col-7 text-center justify-content-center ">
+                <p>
+                    End Date
+                </p>
+            </div>
+        </div>
+
+        <div class="row  mb-3">
+            <div class="col-5">
+                <select class="form-control" @bind="requestVM.Type">
+                    <option>---Select---</option>
+                    <option value="A">Approved</option>
+                    <option value="B">Rejected</option>
+                    <option value="C">Pending</option>
+                </select>
+            </div>
+            <div class="col-7 text-center justify-content-center ">
+
+                <p>
+                    Request Type
+                </p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-5">
+                <textarea rows="5" @bind="requestVM.Reason" class="form-control">
+
+                </textarea>
+            </div>
+            <div class="col-7 text-center justify-content-center ">
+                <p>
+                    Request Reason
+                </p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6"></div>
+            <div class="col-6 text-end">
+                <button class="btn btn-outline-danger m-2" style="width:50%" @onclick="Submit">Submit</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-6  mt-5 border border-1 shadow">
+        <h5>Request History</h5>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Reason</th>
+                            <th>Permission Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(permissionGridVMs is not null)
+                        {
+                            foreach (var item in permissionGridVMs)
+                            {
+                                <tr>
+                                    <td>@item.StartDate</td>
+                                    <td>@item.EndDate</td>
+                                    <td>@item.Reason</td>
+                                    <td>@item.PermissionType</td>
+                                </tr>
+                            }
+                        }
+                        else if(permissionGridVMs is null)
+                        {
+                            <LoaderComponent/>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,12 +13,12 @@ public class JwtGenerator
     {
         _configuration = configuration;
     }
-    public string GenerateJwtToken(EmployeeLoginVM employeeLogin)
+    public string GenerateJwtToken(EmployeeLoginVM employeeLogin,Guid employeeId)
     {
 
         var claims = new[] {
              new Claim("Username", employeeLogin.Username),
-             new Claim("EmployeeId",Guid.NewGuid().ToString())
+             new Claim("EmployeeId",employeeId.ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

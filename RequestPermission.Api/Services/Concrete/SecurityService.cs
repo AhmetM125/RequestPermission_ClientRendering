@@ -27,7 +27,7 @@ public class SecurityService : ISecurityService
             throw new Exception("Invalid username or password");
 
         JwtGenerator jwtGenerator = new JwtGenerator(_configuration);
-        var tokenString = jwtGenerator.GenerateJwtToken(employee);
+        var tokenString = jwtGenerator.GenerateJwtToken(employee,employeeLoginResponse.Id);
 
         return new LoginResponseVM
         {

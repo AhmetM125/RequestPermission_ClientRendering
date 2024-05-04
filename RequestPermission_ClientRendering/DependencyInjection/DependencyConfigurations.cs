@@ -3,6 +3,8 @@ using RequestPermission_ClientRendering.Services.Department.Abstract;
 using RequestPermission_ClientRendering.Services.Department.Concrete;
 using RequestPermission_ClientRendering.Services.Employee.Abstract;
 using RequestPermission_ClientRendering.Services.Employee.Concrete;
+using RequestPermission_ClientRendering.Services.RequestPermission.Abstract;
+using RequestPermission_ClientRendering.Services.RequestPermission.Concrete;
 using RequestPermission_ClientRendering.Services.Security.Abstract;
 using RequestPermission_ClientRendering.Services.Security.Concrete;
 
@@ -16,5 +18,6 @@ public static class DependencyConfigurations
         services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<MainLayoutCascadingValue>();
         services.AddScoped<ILoginService, LoginService>();
+        services.AddScoped<IRequestPermissionService,RequestPermissionService>();
     }
 }

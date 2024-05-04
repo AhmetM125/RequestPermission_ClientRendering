@@ -61,6 +61,17 @@ namespace RequestPermission_ClientRendering.Base
             new("Username", username),
              };
         }
+        public async Task<Guid> GetCurrentUserId()
+        {
+            var savedToken = await _localStorage.GetItemAsync<TokenVM>(TokenKey);
+            if (savedToken == null)
+                return Guid.Empty;
+
+           
+            var id = ParseClaimsFromJwt(savedToken.Token).FirstOrDefault(claim => claim.Type == "EmployeeId")?.Value;
+            return Guid.Parse(id);
+
+        }
         public void NotifyUserLogin(String username)
         {
             var cp = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }, "jwtAuthType"));
